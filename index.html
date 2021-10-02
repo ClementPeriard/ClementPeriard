@@ -1,54 +1,62 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Tracker Pro</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-    </head>
-    <script>
-       $.getJSON("https://api.ipify.org?format=json",
-                                          function(data) {
-            $("#gfg").html(data.ip);
-        })
-    </script>
-    <style>
-        body {
-            background-color: black;margin-left: 10px;margin-top: 50px;font-family: monospace;color: white;
-        }
-        .element1 {
-            border: 2px solid white;border-radius: 6px;background-color: black;
-        }
-    </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <body>
+        <form>
+            <div style="padding-top: 2px;background-color: white;margin-top: 5px;"></div>
+            <select style="margin-top: 5px;" class="element1" id="selectelement">
+                <option>https://</option>
+                <option disabled>http://</option>
+               </select>
+            <input id="userinput" placeholder="www.example.com" type="text" id="mytext" class="element1">
+            <button onclick="myfunc()" class="element1 element2">OK</button>
+            <div style="padding-top: 2px;background-color: white;margin-top: 5px;"></div>
+        </form>
+        <p align="center" style="margin-top: 75px;font-size: 20px;">Loc: <span style="font-family: monospace;" id="loc"></span></p>
+    </body>
+    <script type="text/javascript">
+        function myfunc() {
+            var input = document.getElementById('userinput');
+            window.open("https://"+input.value);
+        } 
+        </script>
         <script>
-            $.get("https://ipinfo.io/json", function (response) {
-$("#ip").html("IP adress: " + response.ip);
-$("#city").html("City, region & country: " + response.city + ", " + response.region + ", " + response.country);
-$("#org").html("Operator: " + response.org)
-$("#loc").html("Location: " + response.loc)
-$("#postal").html("Postal: " + response.postal)
-$("#timezone").html("Timezone: " + response.timezone)
+        $('#selectelement').on('change',function(){
+  var test = $(this).val();
+})
+    </script>
+    <script>
+    $.get("https://ipinfo.io/json", function (response) {
+$("#ip").html(response.ip);
+$("#city").html(response.city + ", " + response.region + ", " + response.country);
+$("#org").html(response.org)
+$("#loc").html(response.loc)
+$("#postal").html(response.postal)
+$("#timezone").html(response.timezone)
 
 }, "jsonp");
-        </script>
-        <form>
-        <h1>Tracker Pro</h1>
-        <div style="padding-top: 1px;background-color: white;margin-top: 10px;"></div>
-        <div style="margin-top: 10px;"></div>
-        <input placeholder="IP adress" class="element1">
-        <div style="margin-top: 10px;"></div>
-        <div style="padding-top: 1px;background-color: white;margin-top: 10px;"></div>
-        <div style="margin-top: 10px;"></div>
-        <button class="element1" style="background-color: rgb(18, 116, 224);color: white;"> <img src="diamant.png" width="10px"> Premium</button>
-        <div style="margin-top: 10px;"></div>
-        <div style="padding-top: 1px;background-color: white;margin-top: 10px;"></div>
-        <p><span id="ip"></span></p>
-        <p><span id="loc"></span></p>
-        <div style="margin-top: 10px;"></div>
-        <div style="padding-top: 1px;background-color: white;margin-top: 10px;"></div>
-    </form>
-    </body>
+</script>
+    <style>
+        .element1 {
+            border: 2px solid white;border-radius: 6px;background-color: black;color: white;
+        }
+        .element2 {
+            background-color: rgb(18, 116, 224);color: white;
+        }
+        .element3 {
+            width: 20%;
+        }
+        .element4 {
+            background-color: red;
+        }
+        input {
+            width: 130px;
+        }
+        body {
+            background-color: black;margin-left: 10px;margin-right: 10px;margin-bottom: 50px;font-family: sans-serif;color: white;
+        }
+    </style>
 </html>
