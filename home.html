@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <p>Console</p>
+        <input style="font-family: monospace;" id="userinput" class="element1"> 
+        <button onclick="myfunc()" class="element1">execute</button>
+        <p><ul style="font-family: monospace;">
+            <li>refresh()</li>
+            <li>reset()</li>
+            <li>window.close()</li>
+            <li>getLocation()</li>
+        </ul></p>
+    </body>
+    <script>
+        function myfunc() {
+            var input = document.getElementById('userinput');
+            if (input.value == "refresh()") {document.location.reload();}
+            if (input.value == "reset()") {document.location.reload();}
+            if (input.value == "window.close()") {document.close();}
+            if (input.value == "getLocation()") {
+                var x = document.getElementById("demo");
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  x.innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude;
+}
+            }
+</script>
+    <style>
+        body {
+            background-color: white;color: black;font-family: sans-serif;
+        }
+        .element1 {
+            border: 2px solid black;border-radius: 6px;background-color: white;color: black;
+        }
+        .element2 {
+            background-color: rgb(18, 116, 224);color: white;
+        }
+    </style>
+</html>
