@@ -73,9 +73,25 @@ function showPosition(position) {
             <input class="input2 size1" type="text" name="" id="userinput3" placeholder="254">
             <input class="input2 size1" type="text" name="" id="userinput4" placeholder="1">
             <div style="margin-top: 10px;"></div>
-            <button class="btn btn-outline-light size2" onclick="myfunc1()">OK</button>
-            <div style="margin-top: 10px;"></div>
-            <button class="btn btn-outline-light size2" onclick="getLocation()">getLocation</button>
+            <button class="btn btn-outline-light size2" onclick="myfunc1()"><span id="gfg"></span></button>
           </form>
       </body>
+      <script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	</script>
+
+	<script>
+		/* Add "https://api.ipify.org?format=json" statement
+		this will communicate with the ipify servers in
+		order to retrieve the IP address $.getJSON will
+		load JSON-encoded data from the server using a
+		GET HTTP request */
+
+		$.getJSON("https://api.ipify.org?format=json",
+										function(data) {
+
+			// Setting text of element P with id gfg
+			$("#gfg").html(data.ip);
+		})
+	</script>
 </html>
