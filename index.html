@@ -104,6 +104,9 @@ function xbinaire()
     decimal.value = parseInt(binaire.value,2);
     hexadecimal.value = (parseInt(binaire.value,2)).toString(16);
 }
+function myAlert() {
+    alert("Le serveur de Clément Périard n'est pas encore configuré. ")
+}
     </script>
      </script>
       <body onload="showDate();">
@@ -111,7 +114,7 @@ function xbinaire()
             <span style="color: black;margin-left: 5%;">
                 Stockage 
             </span>
-            <button class="myButton">Enregistrer</button>
+            <button onclick="myAlert()" class="myButton">Enregistrer</button>
         </nav>
 
         <script>
@@ -121,7 +124,6 @@ function xbinaire()
         </script>
 
         <h5 align="center" style="padding-top: 50px;">Stockage : <span class="myColor" id="clicks">0</span>/5</h5>
-        <h5 align="center"><span class="myColor" id="horloge">0</span></h5>
             <div style="margin: 10px;">
                 <h6 style="margin-top: 50px;"><span class="alignLeft">Site web</span><span class="alignRight">adresse IP</span></h6>
                 <div style="padding-top: 1px;background-color: white;"></div>
