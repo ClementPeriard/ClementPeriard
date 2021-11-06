@@ -1,155 +1,223 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Phoebus.ml</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-      </head>
-      <style>
-          body {
-              background-color: rgb(14, 49, 57);
-              color: white;
-              font-family: sans-serif;
-          }
-          .myInput {
-              border: hidden;
-              background-color: rgb(14, 49, 57);
-              color: white;
-          }
-          .myColor {
-              color: rgb(184, 254, 160);
-          }
-          .myButton {
-              border-radius: 50px;
-              background-color: rgb(18, 116, 224);
-              color: white;
-              border: hidden;
-              margin-right: 5%;
-              font-size: small;
-              height: 25px;
-              width: 90px;
-          }
-          .alignLeft {
-              float: left;
-          }
-          .alignRight {
-              float: right;
-          }
-      </style>
-      <script type="text/javascript"> 
-        function refresh(){
-            var t = 1000; // rafraîchissement en millisecondes
-            setTimeout('showDate()',t)
+    </head>
+    <style>
+        body {
+            color: white;
+            background-color: black;
+            font-family: sans-serif;
+            margin: 10px;
         }
-        
-        function showDate() {
-            var date = new Date()
-            var h = date.getHours();
-            var m = date.getMinutes();
-            var s = date.getSeconds();
-            if( h < 10 ){ h = '0' + h; }
-            if( m < 10 ){ m = '0' + m; }
-            if( s < 10 ){ s = '0' + s; }
-            var time = h + ':' + m + ':' + s
-            document.getElementById('horloge').innerHTML = time;
-            refresh();
+        .myColor {
+            color: rgb(170, 253, 52)
         }
-        /* Add "https://api.ipify.org?format=json" statement
-           this will communicate with the ipify servers in
-           order to retrieve the IP address $.getJSON will
-           load JSON-encoded data from the server using a
-           GET HTTP request */
-  
-        $.getJSON("https://api.ipify.org?format=json",
-                                          function(data) {
-  
-            // Setting text of element P with id gfg
-            $("#gfg").html(data.ip);
-        })
-        var clicks = 0;
-    function hello() {
-        clicks += 1;
-        document.getElementById("clicks").innerHTML = clicks;
-    };
-    function xdecimal()
-{
-    decimal = document.getElementById("decimal");
-    hexadecimal = document.getElementById("hexadecimal");
-    binaire = document.getElementById("binaire");
- 
-    hexadecimal.value = (decimal.value-0).toString(16);
-    binaire.value = (decimal.value-0).toString(2);
+        .myButton {
+            width: 100%;
+            height: 55px;
+            border-radius: 10px;
+            border: hidden;
+        }
+        .myBackground {
+            background-color: rgb(170, 253, 52);
+            color: black;
+        }
+        .myPlay {
+            background-color: rgb(28, 28, 28);
+            color: rgb(170, 253, 52);
+            border: hidden;
+            border-radius: 10px;
+        }
+        .mySelect {
+            width: 50px;
+            height: 10px;
+            border-radius: 10px;
+            border: hidden;
+        }
+        .progress-bar-vertical {
+            width: 20px;
+            min-height: 100px;
+            margin-right: 20px;
+            float: left;
+            display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+            display: -ms-flexbox;  /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+            display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
+            align-items: flex-end;
+            -webkit-align-items: flex-end; /* Safari 7.0+ */
+            background-color: white;
+        }
+
+        .progress-bar-vertical .progress-bar {
+            width: 100%;
+            height: 0;
+            -webkit-transition: height 0.6s ease;
+            -o-transition: height 0.6s ease;
+            transition: height 0.6s ease;
+            background-color: rgb(170, 253, 52);
+        }
+        .alignRight {
+            float: right;
+
+        }
+    </style>
+    <script>
+        var x;
+var startstop = 0;
+
+function startStop() { /* Toggle StartStop */
+
+  startstop = startstop + 1;
+
+  if (startstop === 1) {
+    start();
+    document.getElementById("start").innerHTML = "Stop";
+  } else if (startstop === 2) {
+    document.getElementById("start").innerHTML = "Start";
+    startstop = 0;
+    stop();
+  }
+
 }
- 
-function xhexadecimal()
-{
-    decimal = document.getElementById("decimal");
-    hexadecimal = document.getElementById("hexadecimal");
-    binaire = document.getElementById("binaire");
- 
-    decimal.value = parseInt(hexadecimal.value,16);
-    binaire.value = (parseInt(hexadecimal.value,16)).toString(2);
+
+
+function start() {
+  x = setInterval(timer, 10);
+} /* Start */
+
+function stop() {
+  clearInterval(x);
+} /* Stop */
+
+var milisec = 0;
+var sec = 0; /* holds incrementing value */
+var min = 0;
+var hour = 0;
+
+/* Contains and outputs returned value of  function checkTime */
+
+var miliSecOut = 0;
+var secOut = 0;
+var minOut = 0;
+var hourOut = 0;
+
+/* Output variable End */
+
+
+function timer() {
+  /* Main Timer */
+
+
+  miliSecOut = checkTime(milisec);
+  secOut = checkTime(sec);
+  minOut = checkTime(min);
+  hourOut = checkTime(hour);
+
+  milisec = ++milisec;
+
+  if (milisec === 100) {
+    milisec = 0;
+    sec = ++sec;
+  }
+
+  if (sec == 60) {
+    min = ++min;
+    sec = 0;
+  }
+
+  if (min == 60) {
+    min = 0;
+    hour = ++hour;
+
+  }
+
+
+  document.getElementById("milisec").innerHTML = miliSecOut;
+  document.getElementById("sec").innerHTML = secOut;
+  document.getElementById("min").innerHTML = minOut;
+  document.getElementById("hour").innerHTML = hourOut;
+
 }
- 
-function xbinaire()
-{
-    decimal = document.getElementById("decimal");
-    hexadecimal = document.getElementById("hexadecimal");
-    binaire = document.getElementById("binaire");
- 
-    decimal.value = parseInt(binaire.value,2);
-    hexadecimal.value = (parseInt(binaire.value,2)).toString(16);
+
+
+/* Adds 0 when value is <10 */
+
+
+function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
 }
-function myAlert() {
-    alert("Le serveur de Clément Périard n'est pas encore configuré. ")
-}
-function t() {
-    alert("-r -ris -tur -mur -mini -ntur | vehementer: vivement | voluptas, atis, f: plaisir | olim: jadis | hiem, is, f: l'hiver | diu: longtemps | jam: désormais | sacculum, i, ntr: siècle | aevum, i, ntr: âge |")
+
+function reset() {
+
+
+  /*Reset*/
+
+  milisec = 0;
+  sec = 0;
+  min = 0
+  hour = 0;
+
+  document.getElementById("milisec").innerHTML = "00";
+  document.getElementById("sec").innerHTML = "00";
+  document.getElementById("min").innerHTML = "00";
+  document.getElementById("hour").innerHTML = "00";
+
 }
     </script>
-     </script>
-      <body onload="showDate();">
-        <nav class="navbar" style="background-color: rgb(184, 199, 203); height: 50px;">
-            <span style="color: black;margin-left: 5%;">
-                Stockage 
-            </span>
-            <button onclick="myAlert()" class="myButton">Enregistrer</button>
-        </nav>
-
-        <script>
-            $('#input').on('input',function(e){
-        $("#text").html($(this).val());
-        });
+    <body>
+        <div>
+        <button class="myPlay" onclick="startStop()" id="start">Start</button>
+        <button class="myPlay" onclick="reset()">Reset</button>
+        <button class="myPlay" type="button" onclick="hello()">+ add</button>
+        <button class="myPlay" type="button" onclick="goodbye()">- rem</button>
+        <button class="myPlay" type="button" onclick="time()">+ 0,5</button>
+        <div style="padding-top: 1px;background-color: white;margin-top: 10px;"></div>
+        <div style="margin-top: 10px;"></div>
+            <h1 class="display-6">
+                Time : 
+                <span class="alignRight">
+                        <span id="hour">00</span> :
+                        <span id="min">00</span> :
+                        <span id="sec">00</span> :
+                        <span id="milisec">00</span>
+                </span>
+            </h1>
+            <div style="padding-top: 1px;background-color: white;margin-top: 10px;"></div>
+        <div style="margin-top: 10px;"></div>
+            <h1 class="display-6">
+                Tours : 
+                <span class="alignRight" id="clicks">0.0</span>
+            </h1>
+        </div>
+        <center>
+          <div style="padding-top: 1px;background-color: white;margin-top: 10px;"></div>
+            <div style="margin-top: 10px;"></div>
+            <button class="myButton myBackground"><img src="play.png" alt="" width="15px"> Let's Go</button>
+            <div style="margin-top: 10px;"></div>
+        </center>
+        <script type="text/javascript">
+            var clicks = 0;
+            function hello() {
+                clicks += 0.5;
+                document.getElementById("clicks").innerHTML = clicks;
+            };
+            var tchouk = 0;
+            function goodbye() {
+                clicks -= 0.5;
+                document.getElementById("clicks").innerHTML = clicks;
+            };
+            function time() {
+                sec += 0.5
+            }
         </script>
-
-        <h5 align="center" style="padding-top: 50px;">Stockage : <span class="myColor" id="clicks">0</span>/5</h5>
-            <div style="margin: 10px;">
-                <h6 style="margin-top: 50px;"><span class="alignLeft">Site web</span><span class="alignRight">adresse IP</span></h6>
-                <div style="padding-top: 1px;background-color: white;"></div>
-                <span class="alignLeft"><input class="myInput" onchange="hello()" placeholder="example.com"></span><span class="alignRight"><input class="myInput" style="width: 95px;" placeholder="172.16.254.1"></span>
-                <div style="padding-top: 1px;background-color: white;"></div>
-                <span class="alignLeft"><input class="myInput" onchange="hello()" placeholder="example.com"></span><span class="alignRight"><input class="myInput" style="width: 95px;" placeholder="172.16.254.1"></span>
-                <div style="padding-top: 1px;background-color: white;"></div>
-                <span class="alignLeft"><input class="myInput" onchange="hello()" placeholder="example.com"></span><span class="alignRight"><input class="myInput" style="width: 95px;" placeholder="172.16.254.1"></span>
-                <div style="padding-top: 1px;background-color: white;"></div>
-                <span class="alignLeft"><input class="myInput" onchange="hello()" placeholder="example.com"></span><span class="alignRight"><input class="myInput" style="width: 95px;" placeholder="172.16.254.1"></span>
-                <div style="padding-top: 1px;background-color: white;"></div>
-                <span class="alignLeft"><input class="myInput" onchange="hello()" placeholder="example.com"></span><span class="alignRight"><input class="myInput" style="width: 95px;" placeholder="172.16.254.1"></span>
-                <div style="padding-top: 1px;background-color: white;"></div>
-
-            <p style="margin-top: 50px;"><input placeholder="Décimal" class="element1" type="text" id="decimal" name="decimal" style="background-color: rgb(14, 49, 57);border-radius: 5px;border-color: white;color: white;">
-                <input class="element1 myButton" type="button" name="submit1" value="&#8674;" onClick="xdecimal();"></p>
-                 
-                <p><input placeholder="Hexadécimal" class="element1" type="text" id="hexadecimal" name="hexadecimal" style="background-color: rgb(14, 49, 57);border-radius: 5px;border-color: white;color: white;">
-                <input class="element1 myButton" type="button" name="submit2" value="&#8674;" onClick="xhexadecimal();"></p>
-                 
-                <p><input placeholder="Binaire" class="element1" type="text" id="binaire" name="binaire" style="background-color: rgb(14, 49, 57);border-radius: 5px;border-color: white;color: white;">
-                <input class="element1 myButton" type="button" name="submit3" value="&#8674;" onClick="xbinaire();"></p>
-                <button onclick="t()" style="background-color: rgb(14, 49, 57);color: rgb(14, 49, 57);border: hidden;">XXXXXXXX</button>
-            </div>
-      </body>
+    </body>
 </html>
