@@ -43,12 +43,15 @@ color: transparent;
 }
 
 .free_trial {
-    margin-top: 100px;
     width: 140pt;
     height: 30pt;
     border: hidden;
     border-radius: 7.5px;
     background-color: rgb(239, 239, 239);
     color: black;
+}
+
+.container-btn {
     text-align: center;
+    margin-top: 100px;
 }
